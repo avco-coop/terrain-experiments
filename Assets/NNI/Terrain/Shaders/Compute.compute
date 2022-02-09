@@ -1,0 +1,15 @@
+#pragma kernel TransferHeightmap
+
+// float3 _NW, _NE, _SW, _SE;
+
+RWStructuredBuffer<float> _Heights;
+Texture2D<float> _Heightmap;
+
+#include "Uniforms.cginc"
+// #include "Noise.cginc"
+
+[numthreads(32,32,1)]
+void TransferHeightmap (uint3 id : SV_DispatchThreadID)
+{
+  _Heights[id.x * (_Resolution + 1) + id.y] = _Heightmap[id.xy] * _HeightScale;
+}
