@@ -51,6 +51,8 @@ namespace NNI.Terrain {
 
     public bool generateNormals = false;
 
+    public float normalScale = 1;
+
     public void OnHeightmapChanged (RenderTexture rt) {
       heightmap = rt;
       regeneratePatches = true;
@@ -178,6 +180,7 @@ namespace NNI.Terrain {
       block.SetFloat("_FeatureScale", featureScale);
       block.SetFloat("_HeightScale", heightScale);
       block.SetTexture("_Heightmap", heightmap);
+      block.SetTexture("_MainTex", heightmap);
     }
 
     internal void ConfigureCompute (ComputeShader compute) {

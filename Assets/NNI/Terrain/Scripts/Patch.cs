@@ -75,7 +75,11 @@ namespace NNI.Terrain {
           var pixel = tex.GetPixelBilinear(pos.x / size + 0.5f, pos.z / size + 0.5f);
           var height = pixel.a;
           pos.y = height * node.world.heightScale;
+          // var normal = -new Vector3(pixel.g * tex.width, -node.world.heightScale * node.world.normalScale, pixel.b * tex.height).normalized;
+          // normalize(float3(f.color.gb * _Heightmap_TexelSize.zw, -_HeightScale).xzy)
           data.positions.Add(pos - node.centrePoint);
+          data.normals.Add(Vector3.up);
+          data.tangents.Add(new Vector4(1, 0, 0, -1));
           data.colors.Add(pixel);
           data.uvs.Add((new Vector2(pos.x, pos.z) / size) + new Vector2(0.5f, 0.5f));
         }
@@ -87,6 +91,8 @@ namespace NNI.Terrain {
       mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
       mesh.SetVertices(data.positions);
       mesh.SetColors(data.colors);
+      mesh.SetNormals(data.normals);
+      mesh.SetTangents(data.tangents);
       mesh.SetUVs(0, data.uvs);
       mesh.SetIndices(indices, MeshTopology.Triangles, 0);
       return mesh;

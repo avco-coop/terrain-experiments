@@ -40,6 +40,7 @@ namespace NNI {
         enableRandomWrite = true,
         autoGenerateMips = true,
         msaaSamples = 1,
+        useMipMap = true,
       };
       texture = new RenderTexture(desc);
       Graphics.Blit(null, texture, material);
