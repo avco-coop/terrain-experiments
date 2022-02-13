@@ -11,36 +11,23 @@ using UnityEditor.SceneManagement;
 
 namespace NNI.Terrain {
 
-  [ExecuteAlways]
-  public class World : MonoBehaviour {
+  public class WorldZoomer : MonoBehaviour {
 
-    //     public ComputeShader compute;
+    public World world;
 
-    //     public RenderTexture heightmap;
+    public Vector2 zoom;
 
-    //     public float size = 100;
-    //     public float heightScale = 1;
-    //     public float featureScale = 1;
+    public float rate;
 
-    public Material material;
+    public void Awake () {
+      world.worldScale = zoom.x;
+    }
 
-    public Transform water;
-
-    public Vector2 offset;
-
-    [Min(1e-6f)]
-    public float worldScale = 1;
-
-    public float scaledWaterLevel = 1;
-
-    public void Generate () {
-      if (worldScale > 0) {
-        foreach (var patch in GetComponentsInChildren<Patch>()) {
-          patch.worldScale = worldScale;
-          patch.offset = offset;
-          patch.Generate();
-        }
-      }
+    public void Update () {
+      world.worldScale = Mathf.Lerp(world.worldScale, zoom.y, Time.deltaTime / (Time.deltaTime * rate));
+      // world.worldScale *= Mathf.Lerp(1, rate, Time.deltaTime);
+      // world.worldScale = Mathf.Max(zoom.y, world.worldScale);
+      world.Generate();
     }
 
     //     [Min(1)]

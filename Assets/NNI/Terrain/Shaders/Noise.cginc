@@ -3,6 +3,8 @@
 #include "Packages/jp.keijiro.noiseshader/Shader/SimplexNoise2D.hlsl"
 #include "Packages/jp.keijiro.noiseshader/Shader/SimplexNoise3D.hlsl"
 
+float _Octaves, _Seed;
+
 float SelectedNoise (float3 p) {
   return SimplexNoise(p);
 }
@@ -23,34 +25,39 @@ float OctaveNoise (float2 p, int n) {
   return clamp(t / w, -1, 1);
 }
 
-float OctaveNoise (float2 p) {
-  return OctaveNoise(p, _Octaves);
-}
-
-float2 OctaveNoise2 (float2 p) {
+float2 OctaveNoise2 (float2 p, int n) {
   return float2(
-    OctaveNoise(p + float2(1.0, 3.0)),
-    OctaveNoise(p + float2(2.0, 4.0))
+    OctaveNoise(p + float2(1.0, 3.0), n),
+    OctaveNoise(p + float2(2.0, 4.0), n)
   );
 }
 
-float SampleHeight (float2 p) {
-  p *= _Scale;
-  float f = OctaveNoise(p / 2 + float2(1.7, 5.2), 3);
-  f = saturate(0.2 + 0.8 * f);
-  return pow(abs(OctaveNoise(p + f * OctaveNoise2(p))), _HeightExponent) * _HeightScale;
-  // return pow(OctaveNoise(p / _Scale), 2) * 5;
+float smin (float a, float b, float k) {
+  float h = max(k - abs(a - b), 0.0) / k;
+  return min(a, b) - h * h * k * (1.0 / 4.0);
 }
 
-float4 SampleNormal (float2 p) {
-  float3 o = float3(-1, 0, 1) / _WorldSize;
-  float s11 = SampleHeight(p);
-  float s01 = SampleHeight(p + o.xy) * _HeightScale;
-  float s21 = SampleHeight(p + o.zy) * _HeightScale;
-  float s10 = SampleHeight(p + o.yx) * _HeightScale;
-  float s12 = SampleHeight(p + o.yz) * _HeightScale;
-  return float4(normalize(float3(s01 - s21, 2, s10 - s12)), s11);
+float smin (float a, float b) {
+  return smin(a, b, 0.1);
 }
+
+float smax (float a, float b, float k) {
+  return -smax(-a, -b, k);
+}
+
+float smax (float a, float b) {
+  return -smin(-a, -b);
+}
+
+// float4 SampleNormal (float2 p) {
+//   float3 o = float3(-1, 0, 1) / _WorldSize;
+//   float s11 = SampleHeight(p);
+//   float s01 = SampleHeight(p + o.xy) * _HeightScale;
+//   float s21 = SampleHeight(p + o.zy) * _HeightScale;
+//   float s10 = SampleHeight(p + o.yx) * _HeightScale;
+//   float s12 = SampleHeight(p + o.yz) * _HeightScale;
+//   return float4(normalize(float3(s01 - s21, 2, s10 - s12)), s11);
+// }
 
 // void CalculateUVsSmooth (float2 UV, float2 TexelSize, out float2 UV0, out float2 UV1, out float2 UV2, out float2 UV3, out float2 UV4, out float2 UV5, out float2 UV6, out float2 UV7, out float2 UV8) {
 //   float3 pos = float3(TexelSize.xy, 0);

@@ -5,7 +5,7 @@ using UnityEditor;
 namespace NNI.Terrain.Editor {
 
   [CustomEditor(typeof(World))]
-  public class PlanetEditor : UnityEditor.Editor {
+  public class WorldEditor : UnityEditor.Editor {
 
     World world;
 
@@ -27,7 +27,7 @@ namespace NNI.Terrain.Editor {
       GUILayout.Button("Regenerate");
       DrawDefaultInspector();
       if (EditorGUI.EndChangeCheck())
-        world.dirty = true;
+        world.Generate();
       if (materialEditor) {
         GUILayout.Space(4);
         materialEditor.DrawHeader();

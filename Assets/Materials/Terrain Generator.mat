@@ -7,9 +7,9 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Terrain
-  m_Shader: {fileID: 4800000, guid: b697386f2dbafa16a8bbb21d9debaa04, type: 3}
-  m_ShaderKeywords: _COLOR_BASIC _SAMPLE_SENSIBLE
+  m_Name: Terrain Generator
+  m_Shader: {fileID: 4800000, guid: 2ac4b5893d232d97db4acc1ace8be8c4, type: 3}
+  m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -39,10 +39,6 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _Heightmap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -61,29 +57,45 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _BorderA: 2
+    - _BorderB: 0
     - _BumpScale: 1
-    - _Color: 1
+    - _CalderaSize: 1
+    - _CalderaSmoothing: 0.3
+    - _CalderaStrength: 0.2
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
+    - _DiscSize: 1.1
+    - _DiscSmoothing: 0.5
+    - _DiscStrength: 0.05
     - _DstBlend: 0
+    - _FeatureScale: 1
+    - _Fudge: -1
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _HeightScale: 0
-    - _LodBias: 2.58
+    - _HeightExponent: 2
+    - _HeightScale: 1
+    - _IslandOctaves: 2
+    - _IslandScale: 10
+    - _IslandStrength: 0.2
+    - _LodDepth: 0
     - _Metallic: 0
     - _Mode: 0
-    - _NormalStrength: 1
     - _OcclusionStrength: 1
+    - _Octaves: 10
     - _Parallax: 0.02
-    - _Sample: 2
+    - _Scale: 1
+    - _SeaLevel: 0.01
+    - _Seed: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
+    - _WorldSize: 1.86
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _Tint: {r: 1, g: 1, b: 1, a: 1}
+    - _Offset: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

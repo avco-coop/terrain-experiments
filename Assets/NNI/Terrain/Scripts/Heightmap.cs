@@ -11,6 +11,20 @@ using UnityEngine.Rendering;
 [ExecuteAlways]
 public class Heightmap : MonoBehaviour {
 
+  public int size;
+
+  public Texture2D texture;
+
+  // public bool dirty;
+
+  // public void UPdate ()
+
+  public void Generate () {
+    if (texture)
+      DestroyImmediate(texture);
+    texture = new Texture2D(size, size, GraphicsFormat.R32_SFloat, TextureCreationFlags.None);
+  }
+
   // public RenderTexture source;
 
   // public int seed;
